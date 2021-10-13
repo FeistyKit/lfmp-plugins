@@ -3,3 +3,5 @@ name: lsmpPlugin
 main: com.feisty.lfmp.App
 author: FeistyKit
 description: A very small plugin for my friend's server.
+commands:
+    lfmpboard:
