@@ -7,6 +7,7 @@
   <groupId>com.feisty.lfmp-plugins</groupId>
   <artifactId>lfmp-plugins</artifactId>
   <version>1.0-SNAPSHOT</version>
+  <packaging>jar</packaging>
 
   <name>lfmp-plugins</name>
   <!-- FIXME change it to the project's website -->
@@ -75,6 +76,25 @@
         <plugin>
           <artifactId>maven-project-info-reports-plugin</artifactId>
           <version>3.0.0</version>
+        </plugin>
+
+
+
+        <!-- https://www.baeldung.com/executable-jar-with-maven -->
+        <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-jar-plugin</artifactId>
+            <configuration>
+                <archive>
+                    <manifest>
+                        <addClasspath>true</addClasspath>
+                        <classpathPrefix>/home/feisty/Minecraft/</classpathPrefix>
+                        <mainClass>
+                          com.feisty.lfmp.App
+                        </mainClass>
+                    </manifest>
+                </archive>
+            </configuration>
         </plugin>
       </plugins>
     </pluginManagement>

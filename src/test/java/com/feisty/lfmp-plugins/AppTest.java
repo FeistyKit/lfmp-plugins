@@ -1,4 +1,4 @@
-package com.feisty.lfmp-plugins;
+package com.feisty.lfmp;
 
 import static org.junit.Assert.assertTrue;
 
