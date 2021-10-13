@@ -9,11 +9,11 @@ public class App extends JavaPlugin
 {
     // This is how I will store the total time that a player has spent logged on to the server
     // Format: UUID : (Name, time)
-    public static HashMap<UUID, Pair<String, long>> playerTotalTimeMap;
+    public static HashMap<UUID, Pair<String, Long>> playerTotalTimeMap;
 
     // Stores the time the player logged in.
     // Format: UUID : time
-    public static HashMap<UUID, long> playerCurrentTimeMap;
+    public static HashMap<UUID, Long> playerCurrentTimeMap;
 
 
     @Override

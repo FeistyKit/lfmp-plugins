@@ -1,5 +1,6 @@
 package com.feisty.lfmp;
 
+import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.player.PlayerJoinEvent;
@@ -14,11 +15,11 @@ public class LFMPHandler implements Listener {
         Player p = e.getPlayer();
         String name = p.getDisplayName();
 
-        long now = System.currentTimeMilliSeconds();
+        long now = System.currentTimeMillis();
 
-        UUID u = player.getUniqueId();
+        UUID u = p.getUniqueId();
 
-        App.playerCurrentTimeMap.put(u, Pair(name, now));
+        App.playerCurrentTimeMap.put(u, now);
     }
 
     @EventHandler
@@ -26,13 +27,13 @@ public class LFMPHandler implements Listener {
         Player p = e.getPlayer();
         String name = p.getDisplayName();
 
-        long now = System.currentTimeMilliSeconds();
+        long now = System.currentTimeMillis();
 
-        UUID u = player.getUniqueId();
+        UUID u = p.getUniqueId();
 
-        long time_passed = System.currentTimeMilliSeconds() - App.playerCurrentTimeMap.get(u).val;
+        long time_passed = System.currentTimeMillis() - App.playerCurrentTimeMap.get(u); // The player will always have joined before leaving
 
-        App.playerCurrentTimeMap.getOrDefault(u, Pair(name, time_passed)).val = time_passed;
+        App.playerTotalTimeMap.getOrDefault(u, new Pair(name, time_passed)).val = time_passed;
     }
 
 
