@@ -6,3 +6,4 @@ tmp/
 *.class
 build
 /target
+*.lst
