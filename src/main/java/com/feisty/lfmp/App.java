@@ -35,10 +35,26 @@ public class App extends JavaPlugin
             long timeDiff = System.currentTimeMillis() - m.getValue();
             timeDiff += playerTotalTimeMap.get(u).val;
             playerTotalTimeMap.put(u, new Pair(name, timeDiff));
+            playerCurrentTimeMap.put(u, System.currentTimeMillis());
         }
-        playerCurrentTimeMap = new HashMap<>();
-
     }
 
 
+    // sorts the list of players and their scores and returns them in a sorted list of strings.
+    public static ArrayList<String> fmtScores() {
+        flushMaps();
+
+        ArrayList<String> toReturn = new ArrayList<>;
+
+        Pair<String, Long>[] scores = playerTotalTimeMap.values().toArray();
+
+        Arrays.sort(scores, (Pair<String, Long> score1,  Pair<String, Long> score2) -> {
+                return (int) score2.val - score1.val;
+            });
+
+        for (Pair<String, Long> score : scores ) {
+            toReturn.push(score.key + " : " + Long.toString(score.val) + " milliseconds.");
+        }
+        return toReturn;
+    }
 }
