@@ -33,7 +33,8 @@ public class LFMPHandler implements Listener {
 
         long time_passed = System.currentTimeMillis() - App.playerCurrentTimeMap.get(u); // The player will always have joined before leaving
 
-        App.playerTotalTimeMap.getOrDefault(u, new Pair(name, time_passed)).val = time_passed;
+        Pair<String, Long> entry = App.playerTotalTimeMap.getOrDefault(u, new Pair(name, 0.0));
+        entry.val = time_passed + entry.val;
     }
 
 
