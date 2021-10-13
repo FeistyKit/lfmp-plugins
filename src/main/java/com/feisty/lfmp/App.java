@@ -5,7 +5,8 @@ import java.util.HashMap;
 import com.feisty.lfmp.Pair;
 import java.util.UUID;
 import org.bukkit.Bukkit;
-
+import java.util.ArrayList;
+import java.util.Arrays;
 
 public class App extends JavaPlugin
 {
@@ -44,16 +45,16 @@ public class App extends JavaPlugin
     public static ArrayList<String> fmtScores() {
         flushMaps();
 
-        ArrayList<String> toReturn = new ArrayList<>;
+        ArrayList<String> toReturn = new ArrayList<>();
 
-        Pair<String, Long>[] scores = playerTotalTimeMap.values().toArray();
+        Pair<String, Long>[] scores = (Pair<String, Long>[]) playerTotalTimeMap.values().toArray();
 
         Arrays.sort(scores, (Pair<String, Long> score1,  Pair<String, Long> score2) -> {
-                return (int) score2.val - score1.val;
+                return Math.toIntExact(score2.val - score1.val);
             });
 
         for (Pair<String, Long> score : scores ) {
-            toReturn.push(score.key + " : " + Long.toString(score.val) + " milliseconds.");
+            toReturn.add(score.key + " : " + Long.toString(score.val) + " milliseconds.");
         }
         return toReturn;
     }
