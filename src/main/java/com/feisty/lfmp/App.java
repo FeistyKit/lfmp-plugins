@@ -1,5 +1,9 @@
 package com.feisty.lfmp;
 import org.bukkit.plugin.java.JavaPlugin;
+import java.io.FileOutputStream;
+import java.io.FileInputStream;
+import java.io.ObjectOutputStream;
+import java.io.ObjectInputStream;
 import java.util.Map;
 import java.util.HashMap;
 import com.feisty.lfmp.Pair;
@@ -7,6 +11,9 @@ import java.util.UUID;
 import org.bukkit.Bukkit;
 import java.util.ArrayList;
 import java.util.Arrays;
+import com.feisty.lfmp.CustomBot;
+import java.io.IOException;
+import java.io.FileNotFoundException;
 
 public class App extends JavaPlugin
 {
@@ -18,14 +25,75 @@ public class App extends JavaPlugin
     // Format: UUID : time
     public static HashMap<UUID, Long> playerCurrentTimeMap;
 
+    // the location where it is saved
+    private static String serName;
+
+
+    public static CustomBot bot;
 
     @Override
     public void onEnable() {
+        createBot();
+
         playerTotalTimeMap = new HashMap<>();
         playerCurrentTimeMap = new HashMap<>();
+
         getCommand("lfmpboard").setExecutor(new BoardCommand());
         System.out.println("L'FMP Plugin has been Enabled!");
     }
+
+    @Override
+    public void onDisable() {
+        flushMaps();
+        saveMaps();
+    }
+
+
+    // save hashmaps
+    private static void saveMaps() {
+        try {
+            // https://www.geeksforgeeks.org/serialization-in-java/
+            FileOutputStream file = new FileOutputStream(serName);
+            ObjectOutputStream out = new ObjectOutputStream(file);
+            out.writeObject(playerTotalTimeMap);
+            out.close();
+            file.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.exit(1);
+        }
+    }
+
+    // initialize hashmaps
+    private static void initMaps() {
+        try {
+            playerCurrentTimeMap = new HashMap<>();
+
+            FileInputStream file = new FileInputStream(serName);
+            ObjectInputStream in = new ObjectInputStream(file);
+            playerTotalTimeMap = (HashMap<UUID, Pair<String, Long>>) in.readObject();
+        } catch (Exception e) {
+
+            e.printStackTrace();
+            System.exit(1);
+        }
+    }
+
+
+
+
+    //creates the bot. duh.
+    private static void createBot() {
+        try {
+            bot = new CustomBot("authentication.txt", 0);
+            System.out.println("Bot has been enabled!");
+        } catch (Exception e) {
+            System.err.println("Bot could not be enabled: ");
+            e.printStackTrace();
+            System.exit(1);
+        }
+    }
+
 
     // Flushes the playerCurrentTimeMap to playerTotalTimeMap
     public static void flushMaps() {
