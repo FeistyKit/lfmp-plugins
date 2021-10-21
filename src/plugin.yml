@@ -1,5 +1,5 @@
 version: 1.0
-name: lsmpPlugin
+name: lfmpPlugin
 main: com.feisty.lfmp.App
 author: FeistyKit
 description: A very small plugin for my friend's server.

@@ -116,28 +116,51 @@
                 </archive>
             </configuration>
         </plugin>
-
         <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-shade-plugin</artifactId>
             <version>3.2.4</version>
             <executions>
                 <execution>
                     <phase>package</phase>
+                    <id>pack-shade</id>
                     <goals>
                         <goal>shade</goal>
                     </goals>
                     <configuration>
-                        <artifactSet>
-                          <excludes>
-                            <exclude>org.bukkit:Bukkit</exclude>
-                          </excludes>
-                        </artifactSet>
+                        <relocations>
+                          <relocation>
+                            <pattern>io.netty</pattern>
+                            <shadedPattern>com.discord4j.shaded.io.netty</shadedPattern>
+                          </relocation>
+                          <relocation>
+                            <pattern>com.fasterxml</pattern>
+                            <shadedPattern>com.discord4j.shaded.com.fasterxml</shadedPattern>
+                          </relocation>
+                        </relocations>
+                    </configuration>
+                </execution>
+                <execution>
+                    <phase>shade</phase>
+                    <id>shade-shade</id>
+                    <goals>
+                        <goal>shade</goal>
+                    </goals>
+                    <configuration>
+                        <relocations>
+                          <relocation>
+                            <pattern>io.netty</pattern>
+                            <shadedPattern>com.discord4j.shaded.io.netty</shadedPattern>
+                          </relocation>
+                          <relocation>
+                            <pattern>com.fasterxml</pattern>
+                            <shadedPattern>com.discord4j.shaded.com.fasterxml</shadedPattern>
+                          </relocation>
+                        </relocations>
                     </configuration>
                 </execution>
             </executions>
         </plugin>
-
-
       </plugins>
     </pluginManagement>
   </build>
